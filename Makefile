@@ -37,7 +37,7 @@ CFLAGS += -Isrc -D_POSIX_SOURCE -D_GNU_SOURCE
 CFLAGS += -g -pedantic -std=c99 $(W) -Werror
 
 LDFLAGS := -lprotobuf-c $(shell pkg-config --libs ncurses)
-LDFLAGS += -Wl,-rpath=\$$ORIGIN -Wl,-rpath=\$$ORIGIN/../lib -L. -liirc
+LDFLAGS += -Wl,-rpath=\$$ORIGIN -Wl,-rpath=\$$ORIGIN/../lib:\$$ORIGIN -L. -liirc
 
 .PHONY: all clean libiirc install indent
 
@@ -93,6 +93,7 @@ clean:
 	rm -rf $(TARGETS)
 	rm -rf $(LIBIIRC)
 	rm -rf $(PROTO_SRC)
+	rm -rf src/common/iirc.pb-c.h
 
 ifneq ($(MAKECMDGOALS), clean)
 -include $(DEPS)
